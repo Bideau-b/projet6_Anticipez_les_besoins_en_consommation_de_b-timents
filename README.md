@@ -254,7 +254,7 @@ labels:
 description: "Estimation de la consommation d'énergie et des émissions de CO2 d'un bâtiment non résidentiel de Seattle"
 include:
   - service.py             # logique de l'API
-  - Accueil_conso.html     # page du formulaire (le nom doit être identique à celui lu dans service.py)
+  - Accueil_conso.html     # page du formulaire
 python:
   packages:                # dépendances de production, versions épinglées (celles du notebook)
     - scikit-learn==1.9.1
@@ -379,12 +379,7 @@ gcloud storage rm -r gs://<PROJECT_ID>-transfer
 | Build Docker en local qui échoue (délais d'attente sur Docker Hub, `apt-get` exit 100, `pip` bloqué) | Accès réseau du poste restreint (conteneurs sans sortie fiable, port 80 filtré) | Construire l'image **dans le cloud** (Cloud Shell puis Cloud Build) : même Docker, réseau fiable |
 | Conteneur qui plante au démarrage sur Cloud Run (« model not found ») | Le contexte de build brut du bento ne contient pas les modèles | Générer le contexte avec `construct_containerfile`, qui copie les modèles dans `models/` |
 | `docker push` depuis Cloud Shell refusé (connection refused) | Cause non élucidée (connexion vers le registre depuis Cloud Shell) | Passer par **Cloud Build**, qui construit et pousse depuis l'infrastructure Google |
-| `Repository "seattle-repo" not found` | Dépôt d'images supprimé après un précédent nettoyage | Recréer le dépôt avant de relancer le build |
-| Conteneur lancé sur un port déjà utilisé dans Cloud Shell | Port 3000 occupé | Mapper un autre port côté hôte (`-p 8080:3000`) |
-| Le formulaire n'apparaît pas dans l'image | Fichier renommé mais `bentofile.yaml` pas mis à jour | Le nom dans `include` doit être **identique** à celui lu par `service.py` (casse comprise : Linux distingue majuscules et minuscules) |
-| Page du formulaire qui répond 404 ou redirige | Barre oblique finale manquante | Utiliser `/Accueil_conso/` |
-| Résultats incohérents ou erreur au chargement | Version de scikit-learn différente entre entraînement et service | **Épingler** les versions dans `bentofile.yaml` d'après le notebook |
-| Confusion sur les commandes BentoML | Les messages « Next steps » de `bentoml build` renvoient vers BentoCloud (hors périmètre) | Ignorer BentoCloud : l'image est publiée sur Artifact Registry |
+
 
 À retenir :
 - Épingler les versions de bibliothèques entre entraînement et production.
