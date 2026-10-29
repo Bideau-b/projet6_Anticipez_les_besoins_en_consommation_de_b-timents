@@ -32,7 +32,7 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 | R² en train | 0,79 | 0,61 |
 | R² en validation croisée (5 plis) | 0,60 | 0,41 |
 | R² sur le test (avec 7 bâtiments extrêmes) | 0,67 | 0,40 |
-| Erreur absolue moyenne (MAE) sur le test | ≈ 3,3 M kBtu | ≈ 100 t |
+| Erreur absolue moyenne (MAE) sur le test | ≈ 3,33 M kBtu | ≈ 100,50 t |
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
 
@@ -119,7 +119,7 @@ R² en validation croisée (MAE de validation entre parenthèses) :
 | Modèle | Énergie | CO₂ |
 |---|---|---|
 | Dummy (moyenne) | 0,00 (6,82 M kBtu) | 0,00 (146,86 t) |
-| Régression linéaire | 0,57 (3,5 M) | 0,29 (106,29 t) |
+| Régression linéaire | 0,57 (3,34 M) | 0,29 (106,29 t) |
 | SVR standard | −0,15 (5,79 M) | −0,07 (121,43 t) |
 | SVR réglé (cible mise à l'échelle) | 0,57 (3,29 M) | 0,34 (99,04 t) |
 | Random Forest standard | 0,58 (3,37 M), **train 0,95 : sur-apprentissage** | 0,38 (106,16 t), train 0,92 |
@@ -135,6 +135,17 @@ Le **Random Forest** est retenu pour les deux cibles : meilleure MAE et meilleur
 |---|---|
 | Énergie | `absolute_error`, `max_depth=8`, `max_features=0.6`, `min_samples_leaf=3`, `n_estimators=200` |
 | CO₂ | `absolute_error`, `max_depth=8`, `max_features=1.0`, `min_samples_leaf=5`, `n_estimators=300` |
+
+
+| | Énergie (`SiteEnergyUse(kBtu)`) | CO₂ (`TotalGHGEmissions`, tonnes éq. CO₂) |
+|---|---|---|
+| Modèle retenu | Random Forest réglé par GridSearch | Random Forest réglé par GridSearch |
+| R² en train | 0,79 | 0,61 |
+| R² en validation croisée (5 plis) | 0,60 | 0,41 |
+| R² sur le test (avec 7 bâtiments extrêmes) | 0,67 | 0,40 |
+| Erreur absolue moyenne (MAE) sur le test | ≈ 3,33 M kBtu | ≈ 100,50 t |
+| **Erreur relative médiane sur le test** | **39 %** | **56 %** |
+| Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
 
 ### 3.8 Interprétation
 
