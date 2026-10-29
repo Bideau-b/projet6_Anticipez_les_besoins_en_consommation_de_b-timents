@@ -136,6 +136,7 @@ Le **Random Forest** est retenu pour les deux cibles : meilleure MAE et meilleur
 | Énergie | `absolute_error`, `max_depth=8`, `max_features=0.6`, `min_samples_leaf=3`, `n_estimators=200` |
 | CO₂ | `absolute_error`, `max_depth=8`, `max_features=1.0`, `min_samples_leaf=5`, `n_estimators=300` |
 
+Résultats : 
 
 | | Énergie (`SiteEnergyUse(kBtu)`) | CO₂ (`TotalGHGEmissions`, tonnes éq. CO₂) |
 |---|---|---|
