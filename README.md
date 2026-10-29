@@ -29,9 +29,9 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 | | Énergie (`SiteEnergyUse(kBtu)`) | CO₂ (`TotalGHGEmissions`, tonnes éq. CO₂) |
 |---|---|---|
 | Modèle retenu | Random Forest réglé par GridSearch | Random Forest réglé par GridSearch |
+| R² en train | 0,79 | 0,61 |
 | R² en validation croisée (5 plis) | 0,60 | 0,41 |
-| R² sur le test (hors 7 bâtiments extrêmes) | 0,67 | 0,34 |
-| R² sur le test complet | 0,57 | 0,28 |
+| R² sur le test (avec 7 bâtiments extrêmes) | 0,67 | 0,40 |
 | Erreur absolue moyenne (MAE) sur le test | ≈ 3,3 M kBtu | ≈ 100 t |
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
