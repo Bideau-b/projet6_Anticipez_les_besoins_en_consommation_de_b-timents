@@ -409,9 +409,6 @@ gcloud storage rm -r gs://<PROJECT_ID>-transfer
 
 ## 8. Limites et pistes d'amélioration
 
-- **Précision modeste, surtout sur le CO₂** : erreur relative médiane de 56 %. Les sources d'énergie (gaz, vapeur, électricité) sont exclues pour éviter la fuite de données, alors qu'elles expliquent les émissions. Une piste est de faire demander la source de chauffage dans le formulaire, à condition qu'elle ait été connue à l'entraînement comme information structurelle.
 - **Sur-apprentissage encore visible** (énergie : R² train 0,79 pour 0,60 en validation) et **jeu de test réduit** (296 bâtiments, dont 7 très gros) : les métriques varient d'un découpage à l'autre.
 - **Pas de données sur l'occupation, les équipements ou les systèmes de chauffage.**
 - **Données de 2016 seulement** : un jeu plus récent (relevés 2015 à aujourd'hui) permettrait de réentraîner et de mesurer la dérive.
-- **Périmètre de l'API** : les valeurs hors des plages d'entraînement (très petits ou très grands bâtiments, hors Seattle) sont refusées plutôt qu'extrapolées.
-- **Pistes techniques** : réentraîner avec les seules variables les plus importantes pour alléger le modèle, ajouter des tests automatiques de l'API, un pipeline CI/CD (GitHub Actions) pour reconstruire et déployer l'image, et un suivi des appels en production.
