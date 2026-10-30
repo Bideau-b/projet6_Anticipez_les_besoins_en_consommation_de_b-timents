@@ -1,0 +1,14 @@
+service: "service:SeattleEnergyService"
+labels:
+  project: seattle-energy-benchmarking
+include:
+  - service.py
+  - Accueil_conso.html
+python:
+  packages:
+    - scikit-learn==1.9.1
+    - pandas==2.3.3
+    - numpy==2.3.5
+    - pydantic==2.12.4
+docker:
+  python_version: "3.13"
