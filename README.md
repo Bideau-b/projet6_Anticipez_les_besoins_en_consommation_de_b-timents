@@ -47,7 +47,8 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 ├── README.md
 ├── projet6_modelisation_seattle.ipynb     # Partie 1 : analyse, features, modèles, GridSearch, sauvegarde BentoML
 ├── 2016_Building_Energy_Benchmarking.csv  # Données sources (Ville de Seattle, relevés 2016)
-├── service.py                             # Partie 2 : API BentoML + validation Pydantic + feature engineering
+├── service.py                             # Partie 2 : Validation Pydantic
+├── schemas.py                             # Feature engineering + API BentoML
 ├── Accueil_conso.html                     # Formulaire web (servi par le même service)
 ├── bentofile.yaml                         # Packaging du service (dépendances, fichiers, version de Python)
 └── cloudbuild.yaml                        # Construction de l'image Docker dans Google Cloud Build
