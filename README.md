@@ -262,21 +262,22 @@ Architecture retenue : **Docker** (image construite par BentoML) → **Artifact 
 ### 6.1 Le `bentofile.yaml`
 
 ```yaml
-service: "service:SeattleEnergyService"   # fichier service.py, classe SeattleEnergyService
+service: "service:SeattleEnergyService" # service.py, classe SeattleEnergyService
 labels:
   project: seattle-energy-benchmarking
-description: "Estimation de la consommation d'énergie et des émissions de CO2 d'un bâtiment non résidentiel de Seattle"
 include:
-  - service.py             # logique de l'API
-  - Accueil_conso.html     # page du formulaire (le nom doit être identique à celui lu dans service.py)
+  - service.py  # logique de l'API et des endpoints
+  - schemas.py  # logique de validation des données envoyées (Pydantic)
+  - Bideau_Benjamin_4_fichier_Accueil_conso_10_2026.html  # page du formulaire servie à l'adresse /Accueil_conso/
 python:
-  packages:                # dépendances de production, versions épinglées (celles du notebook)
+  packages: # dépendances de production, versions du notebook
     - scikit-learn==1.9.1
     - pandas==2.3.3
     - numpy==2.3.5
     - pydantic==2.12.4
 docker:
   python_version: "3.13"
+
 ```
 
 Seuls les fichiers nécessaires sont inclus pour garder une image légère. Les modèles sont embarqués automatiquement (ils sont référencés dans `service.py`).
