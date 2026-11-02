@@ -32,7 +32,7 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 | R² en train | 0,79 | 0,61 |
 | R² en validation croisée (5 plis) | 0,60 | 0,41 |
 | R² sur le test (avec 7 bâtiments extrêmes) | 0,67 | 0,40 |
-| Erreur absolue moyenne (MAE) sur le test | ≈ 3,33 M kBtu | ≈ 100,50 t |
+| Erreur absolue moyenne (MAE) sur le test | ≈ 3,30 M kBtu | ≈ 100,50 t |
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
 
@@ -126,9 +126,7 @@ R² en validation croisée (MAE de validation entre parenthèses) :
 | Random Forest standard | 0,58 (3,37 M), **train 0,95 : sur-apprentissage** | 0,38 (106,16 t), train 0,92 |
 | **Random Forest réglé** | **0,59 (3,42 M)**, train 0,84 | **0,43 (105,11 t)**, train 0,77 |
 
-Le **Random Forest** est retenu pour les deux cibles : meilleure MAE et meilleur R² en validation croisée, relations non linéaires (l'effet de la surface dépend de l'usage), importance des variables native. Le choix repose sur la **validation croisée** et non sur le test (296 bâtiments, dont 7 très gros) pour que le test reste une évaluation honnête. Le SVR standard est inadapté tel quel à une cible qui se compte en millions ; sa version réglée (cible standardisée) devient compétitive.
-
-### 3.7 Optimisation (GridSearch)
+### 3.7 Optimisation pour le Random Forest (RF)
 
 `GridSearchCV` sur 108 combinaisons (`n_estimators`, `max_depth`, `min_samples_leaf`, `max_features`, `criterion`), validation croisée à 5 plis, **critère unique : la MAE** (elle se lit dans l'unité du problème et résiste aux quelques très gros bâtiments qui dominent R² et RMSE).
 
@@ -145,11 +143,39 @@ Résultats :
 | R² en train | 0,79 | 0,61 |
 | R² en validation croisée (5 plis) | 0,60 | 0,41 |
 | R² sur le test (avec 7 bâtiments extrêmes) | 0,67 | 0,40 |
-| Erreur absolue moyenne (MAE) sur le test | ≈ 3,33 M kBtu | ≈ 100,50 t |
+| Erreur absolue moyenne (MAE) sur le test | ≈ 3,30 M kBtu | ≈ 100,50 t |
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
 
-### 3.8 Interprétation
+### 3.8 Optimisation pour le SVR
+
+`GridSearchCV` sur 108 combinaisons (`C`, `epsilon`, `gamma`), validation croisée à 5 plis, **critère unique : la MAE** (comme pour le RF)
+
+SiteEnergyUse(kBtu) | meilleurs paramètres : {'C': 30, 'epsilon': 0.05, 'gamma': 0.003}
+TotalGHGEmissions | meilleurs paramètres : {'C': 10, 'epsilon': 0.01, 'gamma': 0.01}
+
+| | Meilleurs paramètres |
+|---|---|
+| Énergie | 'C': 30, 'epsilon': 0.05, 'gamma': 0.003 |
+| CO₂ | 'C': 10, 'epsilon': 0.01, 'gamma': 0.01 |
+
+| | Énergie (`SiteEnergyUse(kBtu)`) | CO₂ (`TotalGHGEmissions`, tonnes éq. CO₂) |
+|---|---|---|
+| R² en train | 0,64 | 0,44 |
+| R² en validation croisée (5 plis) | 0,57 | 0,34 |
+| R² sur le test (avec 7 bâtiments extrêmes) | 0,53 | 0,20 |
+| Erreur absolue moyenne (MAE) sur le test | ≈ 3,22 M kBtu | ≈ 99,04 t |
+
+### Conclusion GridSearch
+
+Choix du modèle -> Random Forest :
+- Meilleur R² en validation sur les deux cibles.
+    Énergie : R² val 0,60 contre 0,57 (Linéaire et SVR), 
+    CO₂ : R² val 0,41 contre 0,34 (SVR) et 0,29 (linéaire)
+    L’avantage est net en CO₂ et plus modeste en énergie.
+- MAE en validation presque équivalente à celle du SVR. Le SVR est un peu meilleur (2,92 M contre 3,07 M en énergie, 79,6 t contre 80,4 t en CO₂), soit environ 5 % d’écart en énergie et 1 % en CO₂. Le Random Forest est meilleur que le linéaire sur les deux cibles. Cet écart ne justifie pas de renoncer à ses autres avantages.
+
+### 3.9 Interprétation pour Random Forest
 
 Importance native (`feature_importances_`, additionnée par variable d'origine) confirmée par la **permutation importance** sur le test :
 - **Énergie** : la surface totale domine (≈ 55 %), puis le type de propriété (≈ 11 %), le nombre d'étages (≈ 10 %), la surface de parking et la surface par étage (≈ 4 % chacune). La permutation confirme l'ordre : mélanger la surface totale augmente la MAE d'environ 3,9 M kBtu.
