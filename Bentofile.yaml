@@ -1,0 +1,15 @@
+service: "service:SeattleEnergyService" # fichier Bideau_Benjamin_4_fichier_service_10_2026.py, classe SeattleEnergyService
+labels:
+  project: seattle-energy-benchmarking
+include:
+  - service.py  # logique de l'API et des endpoints
+  - schemas.py  # logique de validation des donn�es envoy�es (Pydantic)
+  - Bideau_Benjamin_4_fichier_Accueil_conso_10_2026.html  # page du formulaire servie � l'adresse /Accueil_conso/
+python:
+  packages: # d�pendances de production, versions du notebook
+    - scikit-learn==1.9.1
+    - pandas==2.3.3
+    - numpy==2.3.5
+    - pydantic==2.12.4
+docker:
+  python_version: "3.13"
