@@ -311,7 +311,7 @@ pip install bentoml scikit-learn==1.9.1 pandas==2.3.3 numpy==2.3.5 pydantic==2.1
 
 ## 6. Déploiement sur Google Cloud
 
-Architecture retenue : **Docker** (image construite par BentoML) → **Artifact Registry** (stockage de l'image) → **Cloud Run** (exécution de l'image, service généraliste, pas de service spécialisé ML).
+Architecture retenue : **Docker** (image construite par BentoML) → **Artifact Registry** (stockage de l'image) → **Cloud Run** (exécution de l'image, service généraliste).
 
 ### 6.1 Le `bentofile.yaml`
 
