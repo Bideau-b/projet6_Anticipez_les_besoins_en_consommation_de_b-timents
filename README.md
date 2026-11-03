@@ -31,7 +31,7 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 | Modèle retenu | Random Forest réglé par GridSearch | Random Forest réglé par GridSearch |
 | R² en train | 0,79 | 0,61 |
 | R² en validation croisée (5 plis) | 0,60 | 0,41 |
-| R² sur le test (avec 7 bâtiments extrêmes) | 0,56 | 0,28 |
+| R² sur le test (avec 7 bâtiments extrêmes) | 0,57 | 0,28 |
 | Erreur absolue moyenne (MAE) sur le test | ≈ 3,30 M kBtu | ≈ 100,50 t |
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
