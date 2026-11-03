@@ -125,6 +125,7 @@ R² en validation croisée (MAE de validation entre parenthèses) :
 | Random Forest standard | 0,58 (3,31 M), **train 0,95 : sur-apprentissage** | 0,38 (87,88 t), train 0,92 |
 | **Random Forest réglé** | **0,59 (3,24 M)**, train 0,84 | **0,43 (85,24 t)**, train 0,77 |
 
+
 ### 3.7 Optimisation pour le Random Forest (RF)
 
 `GridSearchCV` sur 108 combinaisons (`n_estimators`, `max_depth`, `min_samples_leaf`, `max_features`, `criterion`), validation croisée à 5 plis, **critère unique : la MAE** (elle se lit dans l'unité du problème et résiste aux quelques très gros bâtiments qui dominent R² et RMSE).
@@ -146,6 +147,10 @@ Résultats :
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
 
+| R² sur le test hors 7 bâtiments extrêmes (289 bâtiments, avec filtre quantile) | 0,67 | 0,34 |
+
+Le test complet (296 bâtiments) est la mesure réaliste. Le test filtré retire les 7 bâtiments dont la vraie valeur est extrême : ce sont les plus mal prédits, donc le R² monte
+
 ### 3.8 Optimisation pour le SVR
 
 `GridSearchCV` sur 108 combinaisons (`C`, `epsilon`, `gamma`), validation croisée à 5 plis, **critère unique : la MAE** (comme pour le RF)
@@ -162,6 +167,8 @@ Résultats :
 | R² en validation croisée (5 plis) | 0,57 | 0,34 |
 | R² sur le test (avec 7 bâtiments extrêmes) | 0,53 | 0,20 |
 | Erreur absolue moyenne (MAE) sur le test | ≈ 3,22 M kBtu | ≈ 99,04 t |
+
+| R² sur le test hors 7 bâtiments extrêmes (289 bâtiments, avec filtre quantile) | 0,63 | 0,30 |
 
 ### Conclusion GridSearch
 
