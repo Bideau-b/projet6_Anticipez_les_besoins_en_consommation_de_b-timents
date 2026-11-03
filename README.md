@@ -50,7 +50,7 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 ├── service.py                             # Partie 2 : Feature engineering + API BentoML 
 ├── schemas.py                             # Validation Pydantic
 ├── Accueil_conso.html                     # Formulaire web (servi par le même service)
-├── bentofile.yaml                         # Packaging du service (dépendances, fichiers, version de Python)
+└── bentofile.yaml                         # Packaging du service (dépendances, fichiers, version de Python)
 ```
 
 Source des données : [Seattle Building Energy Benchmarking](https://data.seattle.gov/) (relevés de la Ville de Seattle, année 2016).
@@ -362,9 +362,10 @@ gcloud services enable cloudbuild.googleapis.com artifactregistry.googleapis.com
 gcloud artifacts repositories create seattle-repo --repository-format=docker --location=europe-west9
 ```
 
-`cloudbuild.yaml` (à placer dans le dossier personnel de Cloud Shell) :
+Créer le fichier `cloudbuild.yaml` dans le dossier personnel de Cloud Shell (il indique à Cloud Build où se trouve le Dockerfile généré par BentoML) :
 
-```yaml
+```bash
+cat > ~/cloudbuild.yaml <<'EOF'
 steps:
   - name: gcr.io/cloud-builders/docker
     args: ['build', '-f', 'env/docker/Dockerfile', '-t',
@@ -373,6 +374,7 @@ images:
   - europe-west9-docker.pkg.dev/<PROJECT_ID>/seattle-repo/seattle-energy:v1
 options:
   logging: CLOUD_LOGGING_ONLY
+EOF
 ```
 
 ```bash
