@@ -118,12 +118,12 @@ R² en validation croisée (MAE de validation entre parenthèses) :
 
 | Modèle | Énergie | CO₂ |
 |---|---|---|
-| Dummy (moyenne) | 0,00 (6,82 M kBtu) | 0,00 (146,86 t) |
-| Régression linéaire | 0,57 (3,34 M) | 0,29 (106,29 t) |
-| SVR standard | −0,15 (5,79 M) | −0,07 (121,43 t) |
-| SVR réglé (cible mise à l'échelle) | 0,47 (4,91 M) | 0,23 (153,22 t) |
-| Random Forest standard | 0,58 (3,37 M), **train 0,95 : sur-apprentissage** | 0,38 (106,16 t), train 0,92 |
-| **Random Forest réglé** | **0,59 (3,42 M)**, train 0,84 | **0,43 (105,11 t)**, train 0,77 |
+| Dummy (moyenne) | 0,00 (6,40 M kBtu) | 0,00 (129,60 t) |
+| Régression linéaire | 0,57 (3,53 M) | 0,29 (101,79 t) |
+| SVR standard | −0,15 (5,26 M) | −0,07 (102,00 t) |
+| SVR réglé | 0,48 (4,23 M) **train 0,99 : sur-apprentissage** | 0,23 (107,69 t), train 0,98
+| Random Forest standard | 0,58 (3,31 M), **train 0,95 : sur-apprentissage** | 0,38 (87,88 t), train 0,92 |
+| **Random Forest réglé** | **0,59 (3,24 M)**, train 0,84 | **0,43 (85,24 t)**, train 0,77 |
 
 ### 3.7 Optimisation pour le Random Forest (RF)
 
@@ -293,7 +293,7 @@ labels:
 include:
   - service.py  # logique de l'API et des endpoints
   - schemas.py  # logique de validation des données envoyées (Pydantic)
-  - Bideau_Benjamin_4_fichier_Accueil_conso_10_2026.html  # page du formulaire servie à l'adresse /Accueil_conso/
+  - Accueil_conso.html  # page du formulaire servie à l'adresse /Accueil_conso/
 python:
   packages: # dépendances de production, versions du notebook
     - scikit-learn==1.9.1
