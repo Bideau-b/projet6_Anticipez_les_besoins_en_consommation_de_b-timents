@@ -32,7 +32,7 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 | R² en train | 0,79 | 0,61 |
 | R² en validation croisée (5 plis) | 0,60 | 0,41 |
 | R² sur le test (avec 7 bâtiments extrêmes) | 0,57 | 0,28 |
-| R² sur le test (sans 7 bâtiments extrêmes, filtre quantile) | 0,63 | 0,30 |
+| R² sur le test (sans 7 bâtiments extrêmes, filtre quantile) | 0,67 | 0,34 |
 | Erreur absolue moyenne (MAE) sur le test | ≈ 3,30 M kBtu | ≈ 100,50 t |
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
@@ -113,8 +113,6 @@ Les variables corrélées à plus de 0,7 entre elles ont été retirées pour li
   - catégorielles : `OneHotEncoder(max_categories=15, handle_unknown="ignore")`.
 - **Validation croisée** à 5 plis (`cross_validate`, R², MAE, RMSE) sur le train, puis évaluation finale sur le test.
 
-### 3.6 Comparaison des modèles (paramètres de base)
-
 ### 3.6 Comparaison des modèles avant GridSearch
 
 Même découpage, mêmes bâtiments et mêmes métriques pour tous les modèles. Le **test complet** (296 bâtiments) est la mesure réaliste. Le **test hors extrêmes** (289 bâtiments) retire les 7 bâtiments dont la vraie valeur est extrême (filtre quantile) : il est plus optimiste.
@@ -162,12 +160,13 @@ Résultats :
 | Modèle retenu | Random Forest réglé par GridSearch | Random Forest réglé par GridSearch |
 | R² en train | 0,79 | 0,61 |
 | R² en validation croisée (5 plis) | 0,60 | 0,41 |
-| R² sur le test (avec 7 bâtiments extrêmes) | 0,57 | 0,28 |
+| R² sur le test complet (296 bâtiments) | 0,57 | 0,28 |
+| R² sur le test hors 7 bâtiments extrêmes (289 bâtiments, avec filtre quantile) | 0,67 | 0,34 |
 | Erreur absolue moyenne (MAE) sur le test | ≈ 3,30 M kBtu | ≈ 100,50 t |
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
 
-| R² sur le test hors 7 bâtiments extrêmes (289 bâtiments, avec filtre quantile) | 0,67 | 0,34 |
+
 
 Le test complet (296 bâtiments) est la mesure réaliste. Le test filtré retire les 7 bâtiments dont la vraie valeur est extrême : ce sont les plus mal prédits, donc le R² monte
 
@@ -185,10 +184,11 @@ Le test complet (296 bâtiments) est la mesure réaliste. Le test filtré retire
 |---|---|---|
 | R² en train | 0,64 | 0,44 |
 | R² en validation croisée (5 plis) | 0,57 | 0,34 |
-| R² sur le test (avec 7 bâtiments extrêmes) | 0,53 | 0,20 |
+| R² sur le test complet (296 bâtiments) | 0,53 | 0,20 |
+| R² sur le test hors 7 bâtiments extrêmes (289 bâtiments, avec filtre quantile) | 0,63 | 0,30 |
 | Erreur absolue moyenne (MAE) sur le test | ≈ 3,22 M kBtu | ≈ 99,04 t |
 
-| R² sur le test hors 7 bâtiments extrêmes (289 bâtiments, avec filtre quantile) | 0,63 | 0,30 |
+
 
 ### Conclusion GridSearch
 
