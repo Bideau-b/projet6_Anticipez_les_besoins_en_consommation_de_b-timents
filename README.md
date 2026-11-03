@@ -32,6 +32,7 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 | R² en train | 0,79 | 0,61 |
 | R² en validation croisée (5 plis) | 0,60 | 0,41 |
 | R² sur le test (avec 7 bâtiments extrêmes) | 0,57 | 0,28 |
+| R² sur le test (sans 7 bâtiments extrêmes, filtre quantile) | 0,63 | 0,30 |
 | Erreur absolue moyenne (MAE) sur le test | ≈ 3,30 M kBtu | ≈ 100,50 t |
 | **Erreur relative médiane sur le test** | **39 %** | **56 %** |
 | Variable la plus importante | Surface totale (≈ 55 % de l'importance), puis type de propriété (≈ 11 %) | Surface totale (≈ 43 %), puis type de propriété (≈ 20 %) |
@@ -114,17 +115,36 @@ Les variables corrélées à plus de 0,7 entre elles ont été retirées pour li
 
 ### 3.6 Comparaison des modèles (paramètres de base)
 
-R² en validation croisée (MAE de validation entre parenthèses) :
+### 3.6 Comparaison des modèles avant GridSearch
 
-| Modèle | Énergie | CO₂ |
-|---|---|---|
-| Dummy (moyenne) | 0,00 (6,40 M kBtu) | 0,00 (129,60 t) |
-| Régression linéaire | 0,57 (3,53 M) | 0,29 (101,79 t) |
-| SVR standard | −0,15 (5,26 M) | −0,07 (102,00 t) |
-| SVR réglé | 0,48 (4,23 M) **train 0,99 : sur-apprentissage** | 0,23 (107,69 t), train 0,98
-| Random Forest standard | 0,58 (3,31 M), **train 0,95 : sur-apprentissage** | 0,38 (87,88 t), train 0,92 |
-| **Random Forest réglé** | **0,59 (3,24 M)**, train 0,84 | **0,43 (85,24 t)**, train 0,77 |
+Même découpage, mêmes bâtiments et mêmes métriques pour tous les modèles. Le **test complet** (296 bâtiments) est la mesure réaliste. Le **test hors extrêmes** (289 bâtiments) retire les 7 bâtiments dont la vraie valeur est extrême (filtre quantile) : il est plus optimiste.
 
+**Énergie (`SiteEnergyUse(kBtu)`) : R²**
+
+| Modèle | R² train | R² validation croisée | R² test complet | R² test hors extrêmes |
+|---|---|---|---|---|
+| Dummy (moyenne) | 0,00 | −0,01 | 0,00 | 0,00 |
+| Régression linéaire | 0,64 | 0,57 | 0,68 | 0,65 |
+| SVR standard | −0,14 | −0,15 | −0,09 | −0,14 |
+| SVR réglé à la main | 0,99 | 0,48 | 0,25 | 0,29 |
+| Random Forest standard | 0,95 | 0,58 | 0,61 | 0,69 |
+| Random Forest réglé à la main | 0,84 | 0,59 | 0,60 | 0,67 |
+
+**CO₂ (`TotalGHGEmissions`) : R²**
+
+| Modèle | R² train | R² validation croisée | R² test complet | R² test hors extrêmes |
+|---|---|---|---|---|
+| Dummy (moyenne) | 0,00 | 0,00 | 0,00 | 0,00 |
+| Régression linéaire | 0,40 | 0,29 | 0,42 | 0,32 |
+| SVR standard | −0,07 | −0,07 | −0,04 | −0,08 |
+| SVR réglé à la main | 0,98 | 0,23 | 0,08 | −0,13 |
+| Random Forest standard | 0,92 | 0,38 | 0,33 | 0,24 |
+| Random Forest réglé à la main | 0,77 | 0,43 | 0,31 | 0,30 |
+
+Lecture : le Random Forest standard sur-apprend fortement (R² train 0,95 contre 0,58 en validation). Le réglage à la main de sa profondeur réduit cet écart. 
+Le SVR avec ses réglages par défaut prédit presque une constante (R² négatif), et un réglage manuel trop flexible sur-apprend (R² train 0,99 contre 0,48 en validation). 
+
+On choisit le modèle sur la validation croisée et non sur le R² test, car le test ne contient que 296 bâtiments dont 7 géants qui dominent le R², donc son classement est instable. Le jeu de test ne sert qu’à vérifier le résultat final : s’il avait servi à choisir, il ne mesurerait plus la performance sur des bâtiments nouveaux
 
 ### 3.7 Optimisation pour le Random Forest (RF)
 
