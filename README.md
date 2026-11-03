@@ -122,7 +122,7 @@ R² en validation croisée (MAE de validation entre parenthèses) :
 | Dummy (moyenne) | 0,00 (6,82 M kBtu) | 0,00 (146,86 t) |
 | Régression linéaire | 0,57 (3,34 M) | 0,29 (106,29 t) |
 | SVR standard | −0,15 (5,79 M) | −0,07 (121,43 t) |
-| SVR réglé (cible mise à l'échelle) | 0,57 (3,29 M) | 0,34 (99,04 t) |
+| SVR réglé (cible mise à l'échelle) | 0,47 (4,91 M) | 0,23 (153,22 t) |
 | Random Forest standard | 0,58 (3,37 M), **train 0,95 : sur-apprentissage** | 0,38 (106,16 t), train 0,92 |
 | **Random Forest réglé** | **0,59 (3,42 M)**, train 0,84 | **0,43 (105,11 t)**, train 0,77 |
 
