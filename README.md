@@ -51,7 +51,6 @@ Données 2016  →  nettoyage + features  →  Random Forest (énergie) + Random
 ├── schemas.py                             # Validation Pydantic
 ├── Accueil_conso.html                     # Formulaire web (servi par le même service)
 ├── bentofile.yaml                         # Packaging du service (dépendances, fichiers, version de Python)
-└── cloudbuild.yaml                        # Construction de l'image Docker dans Google Cloud Build
 ```
 
 Source des données : [Seattle Building Energy Benchmarking](https://data.seattle.gov/) (relevés de la Ville de Seattle, année 2016).
