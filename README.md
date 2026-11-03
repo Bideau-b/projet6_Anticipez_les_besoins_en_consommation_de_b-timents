@@ -150,13 +150,11 @@ Résultats :
 
 `GridSearchCV` sur 108 combinaisons (`C`, `epsilon`, `gamma`), validation croisée à 5 plis, **critère unique : la MAE** (comme pour le RF)
 
-SiteEnergyUse(kBtu) | meilleurs paramètres : {'C': 30, 'epsilon': 0.05, 'gamma': 0.003}
-TotalGHGEmissions | meilleurs paramètres : {'C': 10, 'epsilon': 0.01, 'gamma': 0.01}
 
 | | Meilleurs paramètres |
 |---|---|
-| Énergie | 'C': 30, 'epsilon': 0.05, 'gamma': 0.003 |
-| CO₂ | 'C': 10, 'epsilon': 0.01, 'gamma': 0.01 |
+| Énergie | `C: 30`, `epsilon: 0.05`, `gamma: 0.003` |
+| CO₂ | `C: 10`, `epsilon: 0.01`, `gamma: 0.01` |
 
 | | Énergie (`SiteEnergyUse(kBtu)`) | CO₂ (`TotalGHGEmissions`, tonnes éq. CO₂) |
 |---|---|---|
