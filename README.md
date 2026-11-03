@@ -297,7 +297,11 @@ pip install bentoml scikit-learn==1.9.1 pandas==2.3.3 numpy==2.3.5 pydantic==2.1
 > La version de scikit-learn doit être **identique** à celle qui a sauvegardé le modèle, sinon le chargement échoue ou donne des résultats faux.
 
 1. **Entraîner et sauvegarder les modèles** : exécuter le notebook jusqu'à la cellule de sauvegarde. Elle enregistre `seattle_energy_rf` et `seattle_co2_rf` dans le *Model Store* local de BentoML (`bentoml models list` pour vérifier).
-2. **Lancer le service** depuis le dossier du projet :
+2. **Construire le paquet (service, modèles, dépendances)** : attendre « Successfully built Bento »
+   ```bash
+   bentoml build
+   ```
+3. **Lancer le service** depuis le dossier du projet :
    ```bash
    bentoml serve service:SeattleEnergyService
    ```
