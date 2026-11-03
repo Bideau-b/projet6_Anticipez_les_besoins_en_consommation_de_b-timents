@@ -441,31 +441,7 @@ gcloud artifacts repositories delete seattle-repo --location=europe-west9
 gcloud storage rm -r gs://<PROJECT_ID>-transfer
 ```
 
----
-
-## 7. Difficultés rencontrées et enseignements
-
-| Problème | Cause | Solution |
-|---|---|---|
-| Build Docker en local qui échoue (délais d'attente sur Docker Hub, `apt-get` exit 100, `pip` bloqué) | Accès réseau du poste restreint (conteneurs sans sortie fiable, port 80 filtré) | Construire l'image **dans le cloud** (Cloud Shell puis Cloud Build) : même Docker, réseau fiable |
-| Conteneur qui plante au démarrage sur Cloud Run (« model not found ») | Le contexte de build brut du bento ne contient pas les modèles | Générer le contexte avec `construct_containerfile`, qui copie les modèles dans `models/` |
-| `docker push` depuis Cloud Shell refusé (connection refused) | Cause non élucidée (connexion vers le registre depuis Cloud Shell) | Passer par **Cloud Build**, qui construit et pousse depuis l'infrastructure Google |
-| `Repository "seattle-repo" not found` | Dépôt d'images supprimé après un précédent nettoyage | Recréer le dépôt avant de relancer le build |
-| Conteneur lancé sur un port déjà utilisé dans Cloud Shell | Port 3000 occupé | Mapper un autre port côté hôte (`-p 8080:3000`) |
-| Le formulaire n'apparaît pas dans l'image | Fichier renommé mais `bentofile.yaml` pas mis à jour | Le nom dans `include` doit être **identique** à celui lu par `service.py` (casse comprise : Linux distingue majuscules et minuscules) |
-| Page du formulaire qui répond 404 ou redirige | Barre oblique finale manquante | Utiliser `/Accueil_conso/` |
-| Résultats incohérents ou erreur au chargement | Version de scikit-learn différente entre entraînement et service | **Épingler** les versions dans `bentofile.yaml` d'après le notebook |
-| Confusion sur les commandes BentoML | Les messages « Next steps » de `bentoml build` renvoient vers BentoCloud (hors périmètre) | Ignorer BentoCloud : l'image est publiée sur Artifact Registry |
-
-À retenir :
-- Épingler les versions de bibliothèques entre entraînement et production.
-- Embarquer dans le modèle la liste ordonnée des variables.
-- Ne pas supposer que l'utilisateur de l'API connaît le pré-traitement : le service reçoit des données brutes.
-- Évaluer sur un test qui garde les cas difficiles, et choisir le modèle sur la validation croisée.
-
----
-
-## 8. Limites et pistes d'amélioration
+## 7. Limites et pistes d'amélioration
 
 - **Sur-apprentissage encore visible** (énergie : R² train 0,79 pour 0,60 en validation) et **jeu de test réduit** (296 bâtiments, dont 7 très gros) : les métriques varient d'un découpage à l'autre.
 - **Pas de données sur l'occupation, les équipements ou les systèmes de chauffage.**
