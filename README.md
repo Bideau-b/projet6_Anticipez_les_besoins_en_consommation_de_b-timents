@@ -423,7 +423,7 @@ gcloud run deploy seattle-energy-service \
   --allow-unauthenticated
 ```
 
-La commande affiche le **Service URL** : Swagger à la racine, formulaire sur `<Service URL>/Accueil_conso/`. Le premier appel peut être lent (démarrage à froid du conteneur).
+La commande affiche le **Service URL** : Swagger à la racine, formulaire sur `<Service URL>/Accueil_conso/`.
 
 ### 6.3 Tests du service déployé
 
